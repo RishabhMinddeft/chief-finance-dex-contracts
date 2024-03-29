@@ -1,29 +1,35 @@
-pragma solidity =0.5.16;
+pragma solidity ^0.6.2;
 
 import './interfaces/IUniswapV2Factory.sol';
 import './UniswapV2Pair.sol';
-import "@openzeppelin/contracts/access/Roles.sol";
+import './libraries/Roles.sol';
 
 contract UniswapV2Factory is IUniswapV2Factory {
     using Roles for Roles.Role;
 
     Roles.Role private _admin;
 
-    address public feeTo;
-    address public feeToSetter;
-    bytes32 public constant INIT_CODE_HASH = keccak256(abi.encodePacked(type(UniswapV2Pair).creationCode));
+    address public override feeTo;
+    address public override feeToSetter;
+    bytes32 public constant INIT_CODE_HASH =
+        keccak256(abi.encodePacked(type(UniswapV2Pair).creationCode));
 
-    mapping(address => mapping(address => address)) public getPair;
-    address[] public allPairs;
-    uint256 public swapLimitBP;
+    mapping(address => mapping(address => address)) public override getPair;
+    address[] public override allPairs;
+    uint256 public override swapLimitBP;
 
-    uint256 public swapFeeBP;
-    uint256 public addLiquidityFeeBP;
-    uint256 public removeLiquidityFeeBP;
+    uint256 public override swapFeeBP;
+    uint256 public override addLiquidityFeeBP;
+    uint256 public override removeLiquidityFeeBP;
 
-    address public feeReceiver;
+    address public override feeReceiver;
 
-    event PairCreated(address indexed token0, address indexed token1, address pair, uint);
+    event PairCreated(
+        address indexed token0,
+        address indexed token1,
+        address pair,
+        uint256
+    );
 
     constructor(address _feeToSetter, address _feeReceiver) public {
         feeToSetter = _feeToSetter;
@@ -55,40 +61,48 @@ contract UniswapV2Factory is IUniswapV2Factory {
         UniswapV2Pair(pool).setLock(false);
     }
 
-    function setFeeReceiver(address _feeReceiver) external {
+    function setFeeReceiver(address _feeReceiver) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         feeReceiver = _feeReceiver;
     }
 
-    function setSwapLimitBP(uint256 value) external {
+    function setSwapLimitBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         swapLimitBP = value;
     }
 
-    function setSwapFeeBP(uint256 value) external {
+    function setSwapFeeBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         swapFeeBP = value;
     }
 
-    function setAddLiquidityFeeBP(uint256 value) external {
+    function setAddLiquidityFeeBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         addLiquidityFeeBP = value;
     }
 
-    function setRemoveLiquidityFeeBP(uint256 value) external {
+    function setRemoveLiquidityFeeBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         removeLiquidityFeeBP = value;
     }
 
-    function allPairsLength() external view returns (uint) {
+    function allPairsLength() external view override returns (uint256) {
         return allPairs.length;
     }
 
-    function createPair(address tokenA, address tokenB) external returns (address pair) {
+    function createPair(
+        address tokenA,
+        address tokenB
+    ) external override returns (address pair) {
         require(tokenA != tokenB, 'UniswapV2: IDENTICAL_ADDRESSES');
-        (address token0, address token1) = tokenA < tokenB ? (tokenA, tokenB) : (tokenB, tokenA);
+        (address token0, address token1) = tokenA < tokenB
+            ? (tokenA, tokenB)
+            : (tokenB, tokenA);
         require(token0 != address(0), 'UniswapV2: ZERO_ADDRESS');
-        require(getPair[token0][token1] == address(0), 'UniswapV2: PAIR_EXISTS'); // single check is sufficient
+        require(
+            getPair[token0][token1] == address(0),
+            'UniswapV2: PAIR_EXISTS'
+        ); // single check is sufficient
         bytes memory bytecode = type(UniswapV2Pair).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(token0, token1));
         assembly {
@@ -101,12 +115,12 @@ contract UniswapV2Factory is IUniswapV2Factory {
         emit PairCreated(token0, token1, pair, allPairs.length);
     }
 
-    function setFeeTo(address _feeTo) external {
+    function setFeeTo(address _feeTo) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         feeTo = _feeTo;
     }
 
-    function setFeeToSetter(address _feeToSetter) external {
+    function setFeeToSetter(address _feeToSetter) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         feeToSetter = _feeToSetter;
     }
