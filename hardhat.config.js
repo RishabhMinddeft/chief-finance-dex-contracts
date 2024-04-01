@@ -1,7 +1,9 @@
 // const { version } = require("hardhat");
 
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
+
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -54,7 +56,7 @@ module.exports = {
   networks: {
     bsc: {
       url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
-      accounts: ["2305481b90c24d22ff932a5f79668844a44e10b5ab2ad38e3393aa594dca4448"],
+      accounts: [PRIVATE_KEY],
       gas: 4000000000000000,
       gasPrice: 35000000000,
       saveDeployments: true,
@@ -63,7 +65,7 @@ module.exports = {
     },
     mumbai : {
       url:"https://polygon-mumbai.g.alchemy.com/v2/hML_HRNy_LEP9hIU3JkDgpnw0eVcM6hV",
-      accounts:["2305481b90c24d22ff932a5f79668844a44e10b5ab2ad38e3393aa594dca4448"],
+      accounts:[PRIVATE_KEY],
       gas : 400000000000000
     
       
