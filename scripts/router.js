@@ -8,10 +8,10 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const buy_coffee = await ethers.getContractFactory("SwapRouterV2");
-  const deploy_coffee = await buy_coffee.deploy("0xA71c86AFcA1a61c7b1449e230d70C3182E82A7c7","0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc","0xCFbE3AA58eA0E2EFeF56abaF6Aa649AfADa44CA7");
-  await deploy_coffee.deployed();
-  console.log(deploy_coffee.address);
+  const ROUTER_CONTRACT = await ethers.getContractFactory("SwapRouterV2");
+  const ROUTER_CONTRACT_DEPLOYED = await ROUTER_CONTRACT.deploy("0x0f2ce8eE8Ac81687976EdF8D0C10D2576F6D85A4","0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc","0xE24C1EF9D4013174CD55c236870458d55434fefA");
+  await ROUTER_CONTRACT_DEPLOYED.deployed();
+  console.log(ROUTER_CONTRACT_DEPLOYED.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

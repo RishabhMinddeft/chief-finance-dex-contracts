@@ -8,10 +8,11 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const WETH_CONTRACT = await ethers.getContractFactory("WBNB");
-  const WETH_DEPLOYED = await WETH_CONTRACT.deploy();
-  await WETH_DEPLOYED.deployed();
-  console.log(WETH_DEPLOYED.address);
+    console.log("hi");
+  const WBNB_CONTRACT = await ethers.getContractFactory("WBNB");
+  const WBNB_DEPLOYED = await WBNB_CONTRACT.deploy();
+  await WBNB_DEPLOYED.deployed();
+  console.log(WBNB_DEPLOYED.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
