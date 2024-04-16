@@ -65,8 +65,11 @@ module.exports = {
       url:"https://polygon-mumbai.g.alchemy.com/v2/hML_HRNy_LEP9hIU3JkDgpnw0eVcM6hV",
       accounts:[PRIVATE_KEY],
       gas : 400000000000000
-    
-      
+    },
+    sepolia : {
+      url:"https://polygon-mumbai.g.alchemy.com/v2/hML_HRNy_LEP9hIU3JkDgpnw0eVcM6hV",
+      accounts:[PRIVATE_KEY],
+      gas : 400000000000000
     }
   },
   contractSizer: {
