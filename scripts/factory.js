@@ -8,10 +8,10 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const WETH_CONTRACT = await ethers.getContractFactory("WBNB");
-  const WETH_DEPLOYED = await WETH_CONTRACT.deploy();
-  await WETH_DEPLOYED.deployed();
-  console.log(WETH_DEPLOYED.address);
+  const FACTORY_CONTRACT = await ethers.getContractFactory("UniswapV2Factory");
+  const FACTORY_CONTRACT_DEPLOYED = await FACTORY_CONTRACT.deploy("0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140","0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140");
+  await FACTORY_CONTRACT_DEPLOYED.deployed();
+  console.log(FACTORY_CONTRACT_DEPLOYED.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
@@ -21,3 +21,4 @@ main().catch((error) => {
   process.exitCode = 1;
 });
 
+// //0x5FbDB2315678afecb367f032d93F642f64180aa3

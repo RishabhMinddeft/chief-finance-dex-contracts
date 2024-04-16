@@ -8,10 +8,10 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const buy_coffee = await ethers.getContractFactory("UniswapV2Factory");
-  const deploy_coffee = await buy_coffee.deploy("0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140","0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140");
-  await deploy_coffee.deployed();
-  console.log(deploy_coffee.address);
+  const MULTICALL_CONTRACT = await ethers.getContractFactory("Multicall");
+  const MULTICALL_CONTRACT_DEPOLYED = await MULTICALL_CONTRACT.deploy();
+  await MULTICALL_CONTRACT_DEPOLYED.deployed();
+  console.log(MULTICALL_CONTRACT_DEPOLYED.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
