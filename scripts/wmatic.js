@@ -8,10 +8,14 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const ROUTER_CONTRACT = await ethers.getContractFactory("SwapRouterV2");
-  const ROUTER_CONTRACT_DEPLOYED = await ROUTER_CONTRACT.deploy("0xa1749f0f055c6b85e600B1303DF4EBDCB3fc9635","0xa1749f0f055c6b85e600B1303DF4EBDCB3fc9635","0x01805a841ece00cf680996bf4b4e21746c68fd4e");
-  await ROUTER_CONTRACT_DEPLOYED.deployed();
-  console.log(ROUTER_CONTRACT_DEPLOYED.address);
+  console.log("test");
+  const WMATIC_CONTRACT = await ethers.getContractFactory("WMATIC");
+  console.log("test2");
+  const WMATIC_DEPLOYED = await WMATIC_CONTRACT.deploy();
+  console.log("test3");
+  await WMATIC_DEPLOYED.deployed();
+  console.log("test4");
+  console.log(WMATIC_DEPLOYED.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
@@ -21,4 +25,3 @@ main().catch((error) => {
   process.exitCode = 1;
 });
 
-// //0x5FbDB2315678afecb367f032d93F642f64180aa3

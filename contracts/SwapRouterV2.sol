@@ -18,7 +18,7 @@ contract SwapRouterV2 {
     bytes constant MAIN_PAIR_INIT_CODE =
         hex'45fd225de151e44f6fd8b19ee610de7fa06b924ed86b31e6f74aa9d5d0e2ee5b';
     bytes constant SECONDARY_PAIR_INIT_CODE =
-        hex'ecba335299a6693cb2ebc4782e74669b84290b6378ea3a3873c7231a8d7d1074';
+        hex'45fd225de151e44f6fd8b19ee610de7fa06b924ed86b31e6f74aa9d5d0e2ee5b';
 
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'UniswapV2Router: EXPIRED');
