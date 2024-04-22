@@ -30,6 +30,15 @@ contract UniswapV2Factory is IUniswapV2Factory {
         address pair,
         uint256
     );
+    event SwapFeeBPChanged(uint256 timestamp, uint256 value);
+    event SwapLimitBPChanged(uint256 timestamp, uint256 value);
+    event AddLiquidityFeeBPChanged(uint256 timestamp, uint256 value);
+    event RemoveLiquidityFeeBPChanged(uint256 timestamp, uint256 value);
+    event FeeReceiverChanged(uint256 timestamp, address feeTo);
+    event adminAdded(uint256 timestamp, address admin);
+    event adminRemoved(uint256 timestamp, address admin);
+    event lockStatus(uint256 timestamp, address pool);
+    event unlockStatus(uint256 timestamp, address pool);
 
     constructor(address _feeToSetter, address _feeReceiver) public {
         feeToSetter = _feeToSetter;
@@ -44,46 +53,55 @@ contract UniswapV2Factory is IUniswapV2Factory {
     function addAdmin(address account) external {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         _admin.add(account);
+        emit adminAdded(block.timestamp, account);
     }
 
     function removeAdmin(address account) external {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         _admin.remove(account);
+        emit adminRemoved(block.timestamp, account);
     }
 
     function lock(address pool) external {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         UniswapV2Pair(pool).setLock(true);
+        emit lockStatus(block.timestamp, pool);
     }
 
     function unlock(address pool) external {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         UniswapV2Pair(pool).setLock(false);
+        emit unlockStatus(block.timestamp, pool);
     }
 
     function setFeeReceiver(address _feeReceiver) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         feeReceiver = _feeReceiver;
+        emit FeeReceiverChanged(block.timestamp, _feeReceiver);
     }
 
     function setSwapLimitBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         swapLimitBP = value;
+        emit SwapLimitBPChanged(block.timestamp, value);
     }
 
     function setSwapFeeBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         swapFeeBP = value;
+        emit SwapFeeBPChanged(block.timestamp, value);
     }
 
     function setAddLiquidityFeeBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         addLiquidityFeeBP = value;
+        emit AddLiquidityFeeBPChanged(block.timestamp, value);
     }
 
     function setRemoveLiquidityFeeBP(uint256 value) external override {
         require(_admin.has(msg.sender), 'UniswapV2: FORBIDDEN');
         removeLiquidityFeeBP = value;
+        emit RemoveLiquidityFeeBPChanged(block.timestamp, value);
     }
 
     function allPairsLength() external view override returns (uint256) {
