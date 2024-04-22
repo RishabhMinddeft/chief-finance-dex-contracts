@@ -619,7 +619,7 @@ contract SwapRouterV2 {
                 amountOutput = SwapRouterV2Library.getAmountOut(
                     amountInput,
                     reserveInput,
-                    reserveOutput,
+                    reserveOutput
                 );
             }
             (uint amount0Out, uint amount1Out) = input == token0

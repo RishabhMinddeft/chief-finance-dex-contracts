@@ -74,7 +74,7 @@ library SwapRouterV2Library {
     function getAmountOut(
         uint amountIn,
         uint reserveIn,
-        uint reserveOut,
+        uint reserveOut
     ) internal pure returns (uint amountOut) {
         require(amountIn > 0, 'UniswapV2Library: INSUFFICIENT_INPUT_AMOUNT');
         require(
@@ -91,7 +91,7 @@ library SwapRouterV2Library {
     function getAmountIn(
         uint amountOut,
         uint reserveIn,
-        uint reserveOut,
+        uint reserveOut
     ) internal pure returns (uint amountIn) {
         require(amountOut > 0, 'UniswapV2Library: INSUFFICIENT_OUTPUT_AMOUNT');
         require(
@@ -121,11 +121,7 @@ library SwapRouterV2Library {
                 path[i + 1],
                 initCode
             );
-            amounts[i + 1] = getAmountOut(
-                amounts[i],
-                reserveIn,
-                reserveOut, 
-            );
+            amounts[i + 1] = getAmountOut(amounts[i], reserveIn, reserveOut);
         }
     }
 
@@ -133,7 +129,6 @@ library SwapRouterV2Library {
     function getAmountsIn(
         address factory,
         uint amountOut,
-        uint fee,
         address[] memory path,
         bytes memory initCode
     ) internal view returns (uint[] memory amounts) {
@@ -147,12 +142,7 @@ library SwapRouterV2Library {
                 path[i],
                 initCode
             );
-            amounts[i - 1] = getAmountIn(
-                amounts[i],
-                reserveIn,
-                reserveOut,
-                fee
-            );
+            amounts[i - 1] = getAmountIn(amounts[i], reserveIn, reserveOut);
         }
     }
 }
