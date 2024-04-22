@@ -75,7 +75,6 @@ library SwapRouterV2Library {
         uint amountIn,
         uint reserveIn,
         uint reserveOut,
-        uint fee
     ) internal pure returns (uint amountOut) {
         require(amountIn > 0, 'UniswapV2Library: INSUFFICIENT_INPUT_AMOUNT');
         require(
@@ -85,11 +84,7 @@ library SwapRouterV2Library {
         uint amountInWithFee = amountIn.mul(997);
         uint numerator = amountInWithFee.mul(reserveOut);
         uint denominator = reserveIn.mul(1000).add(amountInWithFee);
-        amountOut =
-            numerator /
-            denominator -
-            ((numerator / denominator) * fee) /
-            10000;
+        amountOut = numerator / denominator;
     }
 
     // given an output amount of an asset and pair reserves, returns a required input amount of the other asset
@@ -97,17 +92,14 @@ library SwapRouterV2Library {
         uint amountOut,
         uint reserveIn,
         uint reserveOut,
-        uint fee
     ) internal pure returns (uint amountIn) {
         require(amountOut > 0, 'UniswapV2Library: INSUFFICIENT_OUTPUT_AMOUNT');
         require(
             reserveIn > 0 && reserveOut > 0,
             'UniswapV2Library: INSUFFICIENT_LIQUIDITY'
         );
-        uint adjustedAmountOut = (amountOut * 10000) / (10000 - fee);
-
-        uint numerator = reserveIn.mul(adjustedAmountOut).mul(1000);
-        uint denominator = (reserveOut.sub(adjustedAmountOut)).mul(997);
+        uint numerator = reserveIn.mul(amountOut).mul(1000);
+        uint denominator = (reserveOut.sub(amountOut)).mul(997);
 
         amountIn = (numerator / denominator).add(1);
     }
@@ -116,7 +108,6 @@ library SwapRouterV2Library {
     function getAmountsOut(
         address factory,
         uint amountIn,
-        uint fee,
         address[] memory path,
         bytes memory initCode
     ) internal view returns (uint[] memory amounts) {
@@ -133,8 +124,7 @@ library SwapRouterV2Library {
             amounts[i + 1] = getAmountOut(
                 amounts[i],
                 reserveIn,
-                reserveOut,
-                fee
+                reserveOut, 
             );
         }
     }

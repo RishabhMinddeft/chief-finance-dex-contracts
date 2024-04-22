@@ -394,7 +394,6 @@ contract SwapRouterV2 {
         amounts = SwapRouterV2Library.getAmountsOut(
             isUni ? factorySecondary : factoryMain,
             amountIn,
-            isUni ? 0 : IUniswapV2Factory(factoryMain).swapFeeBP(),
             path,
             isUni ? SECONDARY_PAIR_INIT_CODE : MAIN_PAIR_INIT_CODE
         );
@@ -426,7 +425,6 @@ contract SwapRouterV2 {
         amounts = SwapRouterV2Library.getAmountsIn(
             isUni ? factorySecondary : factoryMain,
             amountOut,
-            isUni ? 0 : IUniswapV2Factory(factoryMain).swapFeeBP(),
             path,
             isUni ? SECONDARY_PAIR_INIT_CODE : MAIN_PAIR_INIT_CODE
         );
@@ -458,7 +456,6 @@ contract SwapRouterV2 {
         amounts = SwapRouterV2Library.getAmountsOut(
             isUni ? factorySecondary : factoryMain,
             msg.value,
-            isUni ? 0 : IUniswapV2Factory(factoryMain).swapFeeBP(),
             path,
             isUni ? SECONDARY_PAIR_INIT_CODE : MAIN_PAIR_INIT_CODE
         );
@@ -492,7 +489,6 @@ contract SwapRouterV2 {
         amounts = SwapRouterV2Library.getAmountsIn(
             isUni ? factorySecondary : factoryMain,
             amountOut,
-            isUni ? 0 : IUniswapV2Factory(factoryMain).swapFeeBP(),
             path,
             isUni ? SECONDARY_PAIR_INIT_CODE : MAIN_PAIR_INIT_CODE
         );
@@ -514,10 +510,7 @@ contract SwapRouterV2 {
         _swap(amounts, path, address(this), isUni);
         uint256 withdrawAmount = isUni
             ? amounts[amounts.length - 1]
-            : amounts[amounts.length - 1] -
-                (amounts[amounts.length - 1] *
-                    IUniswapV2Factory(factoryMain).swapFeeBP()) /
-                10000;
+            : amounts[amounts.length - 1];
         IWETH(WETH).withdraw(withdrawAmount);
         TransferHelper.safeTransferETH(to, withdrawAmount);
     }
@@ -533,7 +526,6 @@ contract SwapRouterV2 {
         amounts = SwapRouterV2Library.getAmountsOut(
             isUni ? factorySecondary : factoryMain,
             amountIn,
-            isUni ? 0 : IUniswapV2Factory(factoryMain).swapFeeBP(),
             path,
             isUni ? SECONDARY_PAIR_INIT_CODE : MAIN_PAIR_INIT_CODE
         );
@@ -555,10 +547,7 @@ contract SwapRouterV2 {
         _swap(amounts, path, address(this), isUni);
         uint256 withdrawAmount = isUni
             ? amounts[amounts.length - 1]
-            : amounts[amounts.length - 1] -
-                (amounts[amounts.length - 1] *
-                    IUniswapV2Factory(factoryMain).swapFeeBP()) /
-                10000;
+            : amounts[amounts.length - 1];
         IWETH(WETH).withdraw(withdrawAmount);
         TransferHelper.safeTransferETH(to, withdrawAmount);
     }
@@ -573,7 +562,6 @@ contract SwapRouterV2 {
         amounts = SwapRouterV2Library.getAmountsIn(
             isUni ? factorySecondary : factoryMain,
             amountOut,
-            isUni ? 0 : IUniswapV2Factory(factoryMain).swapFeeBP(),
             path,
             isUni ? SECONDARY_PAIR_INIT_CODE : MAIN_PAIR_INIT_CODE
         );
@@ -632,7 +620,6 @@ contract SwapRouterV2 {
                     amountInput,
                     reserveInput,
                     reserveOutput,
-                    isUni ? 0 : IUniswapV2Factory(factoryMain).swapFeeBP()
                 );
             }
             (uint amount0Out, uint amount1Out) = input == token0
