@@ -508,11 +508,8 @@ contract SwapRouterV2 {
             amounts[0]
         );
         _swap(amounts, path, address(this), isUni);
-        uint256 withdrawAmount = isUni
-            ? amounts[amounts.length - 1]
-            : amounts[amounts.length - 1];
-        IWETH(WETH).withdraw(withdrawAmount);
-        TransferHelper.safeTransferETH(to, withdrawAmount);
+        IWETH(WETH).withdraw(amounts[amounts.length - 1]);
+        TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
     }
     function swapExactTokensForETH(
         uint amountIn,
@@ -545,11 +542,8 @@ contract SwapRouterV2 {
             amounts[0]
         );
         _swap(amounts, path, address(this), isUni);
-        uint256 withdrawAmount = isUni
-            ? amounts[amounts.length - 1]
-            : amounts[amounts.length - 1];
-        IWETH(WETH).withdraw(withdrawAmount);
-        TransferHelper.safeTransferETH(to, withdrawAmount);
+        IWETH(WETH).withdraw(amounts[amounts.length - 1]);
+        TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
     }
     function swapETHForExactTokens(
         uint amountOut,
