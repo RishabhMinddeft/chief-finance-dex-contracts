@@ -7,6 +7,15 @@ interface IUniswapV2Factory {
         address pair,
         uint
     );
+    event SwapFeeBPChanged(uint256 timestamp, uint256 value);
+    event SwapLimitBPChanged(uint256 timestamp, uint256 value);
+    event AddLiquidityFeeBPChanged(uint256 timestamp, uint256 value);
+    event RemoveLiquidityFeeBPChanged(uint256 timestamp, uint256 value);
+    event FeeReceiverChanged(uint256 timestamp, address feeTo);
+    event adminAdded(uint256 timestamp, address admin);
+    event adminRemoved(uint256 timestamp, address admin);
+    event lockStatus(uint256 timestamp, address pool);
+    event unlockStatus(uint256 timestamp, address pool);
 
     function feeTo() external view returns (address);
     function feeToSetter() external view returns (address);
