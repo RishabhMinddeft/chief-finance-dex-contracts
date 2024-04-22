@@ -66,10 +66,9 @@ module.exports = {
       accounts:[PRIVATE_KEY],
       gas : 400000000000000
     },
-    sepolia : {
-      url:"https://polygon-mumbai.g.alchemy.com/v2/hML_HRNy_LEP9hIU3JkDgpnw0eVcM6hV",
-      accounts:[PRIVATE_KEY],
-      gas : 400000000000000
+    sepolia:{
+      url:"https://sepolia.infura.io/v3/6a862ce0da644115ad4e2f4696516800",
+      accounts:[PRIVATE_KEY]
     }
   },
   contractSizer: {
