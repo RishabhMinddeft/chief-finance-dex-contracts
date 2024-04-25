@@ -235,6 +235,7 @@ contract UniswapV2Pair is UniswapV2ERC20 {
             'UniswapV2: INSUFFICIENT_OUTPUT_AMOUNT'
         );
         (uint112 _reserve0, uint112 _reserve1, ) = getReserves(); // gas savings
+
         require(
             amount0Out <
                 ((_reserve0 * IUniswapV2Factory(factory).swapLimitBP()) /

@@ -16,9 +16,9 @@ contract SwapRouterV2 {
     address public immutable WETH;
 
     bytes constant MAIN_PAIR_INIT_CODE =
-        hex'e973e3d886c55dcdd68af79ba1794ef0161db147d6a5eda7d2bf70fce9265a03';
+        hex'8270d308fcd9b079c96f0f5c9ca348d65b0dad8943258ab76e0475cef640e221';
     bytes constant SECONDARY_PAIR_INIT_CODE =
-        hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f';
+        hex'4156ccc01dad273e6c65c4335c428a2ff4a4b0c95a9a228f6bfed45a069d3fe7';
 
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'UniswapV2Router: EXPIRED');
@@ -511,7 +511,8 @@ contract SwapRouterV2 {
         uint256 adjustedAmount = isUni
             ? amounts[amounts.length - 1]
             : amounts[amounts.length - 1] -
-                (amounts[amounts.length - 1] * IUniswapV2Factory.swapFeeBP()) /
+                (amounts[amounts.length - 1] *
+                    IUniswapV2Factory(factoryMain).swapFeeBP()) /
                 10000;
         IWETH(WETH).withdraw(adjustedAmount);
         TransferHelper.safeTransferETH(to, adjustedAmount);
@@ -550,7 +551,8 @@ contract SwapRouterV2 {
         uint256 adjustedAmount = isUni
             ? amounts[amounts.length - 1]
             : amounts[amounts.length - 1] -
-                (amounts[amounts.length - 1] * IUniswapV2Factory.swapFeeBP()) /
+                (amounts[amounts.length - 1] *
+                    IUniswapV2Factory(factoryMain).swapFeeBP()) /
                 10000;
         IWETH(WETH).withdraw(adjustedAmount);
         TransferHelper.safeTransferETH(to, adjustedAmount);
