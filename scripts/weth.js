@@ -10,14 +10,15 @@ const hre = require("hardhat");
 async function main() {
   const WARB_CONTRACT = await ethers.getContractFactory("WARB");
   const WARB_DEPLOYED = await WARB_CONTRACT.deploy();
-  await WARB_DEPLOYED.deployed();
-  console.log(WARB_DEPLOYED.address);
+  console.log(WARB_DEPLOYED)
+  // await WARB_DEPLOYED.deployed();
+  // console.log(WARB_DEPLOYED.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-  console.error(error);
+  console.error("error",error);
   process.exitCode = 1;
 });
 

@@ -53,22 +53,22 @@ module.exports = {
   allowUnlimitedContractSize: true,
   etherscan: {
     apiKey: {
-      amoy: "5UIIDB1ZYSCJIRF83EY291N3KHUR96VV76"
+      sepoliaArbitrium: "U8SZWYCEVUCUESBVRHGXK3WN14XE8FXWGE"
     
   },
   customChains: [
     {
-      network: "gArbitrium",
+      network: "sepoliaArbitrium",
       chainId: 421614,
       urls: {
-        apiURL: "https://api-amoy.polygonscan.com/api",
-        browserURL: "https://amoy.polygonscan.com/"
+        apiURL: "https://api-goerli.arbiscan.io/api",
+        browserURL: "https://sepolia.arbiscan.io/"
       }
     }
   ]
 },
   networks :{
-    gArbitrium :{
+    sepoliaArbitrium :{
       url : "https://sepolia-rollup.arbitrum.io/rpc",
       accounts : [PRIVATE_KEY],
       gas : 400000000000000,
