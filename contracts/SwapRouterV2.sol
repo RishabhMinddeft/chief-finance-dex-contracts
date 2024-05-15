@@ -5,7 +5,7 @@ import './interfaces/IUniswapV2Router02.sol';
 import './libraries/SwapRouterV2Library.sol';
 import './libraries/SafeMath.sol';
 import './interfaces/IERC20.sol';
-import './interfaces/IWETH.sol';
+import './interfaces/IWARB.sol';
 import './interfaces/IUniswapV2Factory.sol';
 
 contract SwapRouterV2 {
@@ -13,7 +13,7 @@ contract SwapRouterV2 {
 
     address public immutable factoryMain;
     address public immutable factorySecondary;
-    address public immutable WETH;
+    address public immutable WARB;
 
     bytes constant MAIN_PAIR_INIT_CODE =
         hex'45fd225de151e44f6fd8b19ee610de7fa06b924ed86b31e6f74aa9d5d0e2ee5b';
@@ -28,15 +28,15 @@ contract SwapRouterV2 {
     constructor(
         address _factoryMain,
         address _factorySecondary,
-        address _WETH
+        address _WARB
     ) public {
         factoryMain = _factoryMain;
         factorySecondary = _factorySecondary;
-        WETH = _WETH;
+        WARB = _WARB;
     }
 
     receive() external payable {
-        assert(msg.sender == WETH); // only accept ETH via fallback from the WETH contract
+        assert(msg.sender == WARB); // only accept ETH via fallback from the WARB contract
     }
 
     // **** ADD LIQUIDITY ****
@@ -46,7 +46,6 @@ contract SwapRouterV2 {
         uint amountADesired,
         uint amountBDesired,
         uint amountAMin,
-
         uint amountBMin
     ) internal returns (uint amountA, uint amountB) {
         // create the pair if it doesn't exist yet
@@ -137,7 +136,7 @@ contract SwapRouterV2 {
     {
         (amountToken, amountETH) = _addLiquidity(
             token,
-            WETH,
+            WARB,
             amountTokenDesired,
             msg.value,
             amountTokenMin,
@@ -146,12 +145,12 @@ contract SwapRouterV2 {
         address pair = SwapRouterV2Library.pairFor(
             factoryMain,
             token,
-            WETH,
+            WARB,
             MAIN_PAIR_INIT_CODE
         );
         TransferHelper.safeTransferFrom(token, msg.sender, pair, amountToken);
-        IWETH(WETH).deposit{value: amountETH}();
-        assert(IWETH(WETH).transfer(pair, amountETH));
+        IWARB(WARB).deposit{value: amountETH}();
+        assert(IWARB(WARB).transfer(pair, amountETH));
         liquidity = IUniswapV2Pair(pair).mint(to);
         // refund dust eth, if any
         if (msg.value > amountETH)
@@ -199,7 +198,7 @@ contract SwapRouterV2 {
     ) public ensure(deadline) returns (uint amountToken, uint amountETH) {
         (amountToken, amountETH) = removeLiquidity(
             token,
-            WETH,
+            WARB,
             liquidity,
             amountTokenMin,
             amountETHMin,
@@ -207,7 +206,7 @@ contract SwapRouterV2 {
             deadline
         );
         TransferHelper.safeTransfer(token, to, amountToken);
-        IWETH(WETH).withdraw(amountETH);
+        IWARB(WARB).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
     function removeLiquidityWithPermit(
@@ -264,7 +263,7 @@ contract SwapRouterV2 {
         address pair = SwapRouterV2Library.pairFor(
             factoryMain,
             token,
-            WETH,
+            WARB,
             MAIN_PAIR_INIT_CODE
         );
         uint value = approveMax ? uint(-1) : liquidity;
@@ -298,7 +297,7 @@ contract SwapRouterV2 {
     ) public ensure(deadline) returns (uint amountETH) {
         (, amountETH) = removeLiquidity(
             token,
-            WETH,
+            WARB,
             liquidity,
             amountTokenMin,
             amountETHMin,
@@ -310,7 +309,7 @@ contract SwapRouterV2 {
             to,
             IERC20(token).balanceOf(address(this))
         );
-        IWETH(WETH).withdraw(amountETH);
+        IWARB(WARB).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
     function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
@@ -328,7 +327,7 @@ contract SwapRouterV2 {
         address pair = SwapRouterV2Library.pairFor(
             factoryMain,
             token,
-            WETH,
+            WARB,
             MAIN_PAIR_INIT_CODE
         );
         uint value = approveMax ? uint(-1) : liquidity;
@@ -455,7 +454,7 @@ contract SwapRouterV2 {
         uint deadline,
         bool isUni
     ) external payable ensure(deadline) returns (uint[] memory amounts) {
-        require(path[0] == WETH, 'UniswapV2Router: INVALID_PATH');
+        require(path[0] == WARB, 'UniswapV2Router: INVALID_PATH');
         amounts = SwapRouterV2Library.getAmountsOut(
             isUni ? factorySecondary : factoryMain,
             msg.value,
@@ -467,9 +466,9 @@ contract SwapRouterV2 {
             amounts[amounts.length - 1] >= amountOutMin,
             'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT'
         );
-        IWETH(WETH).deposit{value: amounts[0]}();
+        IWARB(WARB).deposit{value: amounts[0]}();
         assert(
-            IWETH(WETH).transfer(
+            IWARB(WARB).transfer(
                 SwapRouterV2Library.pairFor(
                     isUni ? factorySecondary : factoryMain,
                     path[0],
@@ -489,7 +488,7 @@ contract SwapRouterV2 {
         uint deadline,
         bool isUni
     ) external ensure(deadline) returns (uint[] memory amounts) {
-        require(path[path.length - 1] == WETH, 'UniswapV2Router: INVALID_PATH');
+        require(path[path.length - 1] == WARB, 'UniswapV2Router: INVALID_PATH');
         amounts = SwapRouterV2Library.getAmountsIn(
             isUni ? factorySecondary : factoryMain,
             amountOut,
@@ -519,7 +518,7 @@ contract SwapRouterV2 {
                 (amounts[amounts.length - 1] *
                     IUniswapV2Factory(factoryMain).swapFeeBP()) /
                 10000;
-        IWETH(WETH).withdraw(withdrawAmount);
+        IWARB(WARB).withdraw(withdrawAmount);
         TransferHelper.safeTransferETH(to, withdrawAmount);
     }
     function swapExactTokensForETH(
@@ -530,7 +529,7 @@ contract SwapRouterV2 {
         uint deadline,
         bool isUni
     ) external ensure(deadline) returns (uint[] memory amounts) {
-        require(path[path.length - 1] == WETH, 'UniswapV2Router: INVALID_PATH');
+        require(path[path.length - 1] == WARB, 'UniswapV2Router: INVALID_PATH');
         amounts = SwapRouterV2Library.getAmountsOut(
             isUni ? factorySecondary : factoryMain,
             amountIn,
@@ -560,7 +559,7 @@ contract SwapRouterV2 {
                 (amounts[amounts.length - 1] *
                     IUniswapV2Factory(factoryMain).swapFeeBP()) /
                 10000;
-        IWETH(WETH).withdraw(withdrawAmount);
+        IWARB(WARB).withdraw(withdrawAmount);
         TransferHelper.safeTransferETH(to, withdrawAmount);
     }
     function swapETHForExactTokens(
@@ -570,7 +569,7 @@ contract SwapRouterV2 {
         uint deadline,
         bool isUni
     ) external payable ensure(deadline) returns (uint[] memory amounts) {
-        require(path[0] == WETH, 'UniswapV2Router: INVALID_PATH');
+        require(path[0] == WARB, 'UniswapV2Router: INVALID_PATH');
         amounts = SwapRouterV2Library.getAmountsIn(
             isUni ? factorySecondary : factoryMain,
             amountOut,
@@ -582,9 +581,9 @@ contract SwapRouterV2 {
             amounts[0] <= msg.value,
             'UniswapV2Router: EXCESSIVE_INPUT_AMOUNT'
         );
-        IWETH(WETH).deposit{value: amounts[0]}();
+        IWARB(WARB).deposit{value: amounts[0]}();
         assert(
-            IWETH(WETH).transfer(
+            IWARB(WARB).transfer(
                 SwapRouterV2Library.pairFor(
                     isUni ? factorySecondary : factoryMain,
                     path[0],
@@ -684,11 +683,11 @@ contract SwapRouterV2 {
         uint deadline,
         bool isUni
     ) external payable ensure(deadline) {
-        require(path[0] == WETH, 'UniswapV2Router: INVALID_PATH');
+        require(path[0] == WARB, 'UniswapV2Router: INVALID_PATH');
         uint amountIn = msg.value;
-        IWETH(WETH).deposit{value: amountIn}();
+        IWARB(WARB).deposit{value: amountIn}();
         assert(
-            IWETH(WETH).transfer(
+            IWARB(WARB).transfer(
                 SwapRouterV2Library.pairFor(
                     isUni ? factorySecondary : factoryMain,
                     path[0],
@@ -714,7 +713,7 @@ contract SwapRouterV2 {
         uint deadline,
         bool isUni
     ) external ensure(deadline) {
-        require(path[path.length - 1] == WETH, 'UniswapV2Router: INVALID_PATH');
+        require(path[path.length - 1] == WARB, 'UniswapV2Router: INVALID_PATH');
         TransferHelper.safeTransferFrom(
             path[0],
             msg.sender,
@@ -727,12 +726,12 @@ contract SwapRouterV2 {
             amountIn
         );
         _swapSupportingFeeOnTransferTokens(path, address(this), isUni);
-        uint amountOut = IERC20(WETH).balanceOf(address(this));
+        uint amountOut = IERC20(WARB).balanceOf(address(this));
         require(
             amountOut >= amountOutMin,
             'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT'
         );
-        IWETH(WETH).withdraw(amountOut);
+        IWARB(WARB).withdraw(amountOut);
         TransferHelper.safeTransferETH(to, amountOut);
     }
 }

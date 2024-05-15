@@ -52,16 +52,14 @@ module.exports = {
   },
   allowUnlimitedContractSize: true,
   etherscan: {
-    // "apiKey" : 
-    //    "5SF1UVF68KSRPMM35NZTEJF8YPV4EIF12I"
     apiKey: {
       amoy: "5UIIDB1ZYSCJIRF83EY291N3KHUR96VV76"
     
   },
   customChains: [
     {
-      network: "amoy",
-      chainId: 80002,
+      network: "gArbitrium",
+      chainId: 421614,
       urls: {
         apiURL: "https://api-amoy.polygonscan.com/api",
         browserURL: "https://amoy.polygonscan.com/"
@@ -70,43 +68,11 @@ module.exports = {
   ]
 },
   networks :{
-    goerli : {
-      url:"https://eth-goerli.g.alchemy.com/v2/FItuEVKk0qJoFriqWlGBqTe3D1pzZy-9",
-      accounts:[PRIVATE_KEY],
-      gas : 400000000000000
-    
-      
-    },
-    sepolia:{
-      url:"https://eth-sepolia.g.alchemy.com/v2/YVEZdAA5ZWLTjpXiP5vqmtKw2OkHGo1L",
-      accounts:[PRIVATE_KEY],
-      gas : 400000000000000
-
-    },
-    bsc: {
-      url: "https://palpable-green-glitter.bsc-testnet.quiknode.pro/6d309f42f6fc1345b38b38e480512671291983f0/",
-      
-      accounts: [PRIVATE_KEY],
-      gas: 4000000000000000,
-      gasPrice: 35000000000,
-      saveDeployments: true,
-
-
-    },
-    mumbai : {
-      url:"https://polygon-mumbai.infura.io/v3/4458cf4d1689497b9a38b1d6bbf05e78",
-      accounts:[PRIVATE_KEY],
-      gas : 400000000000000
-    
-      
-    },
-    amoy :{
-      url : "https://80002.rpc.thirdweb.com",
+    gArbitrium :{
+      url : "https://sepolia-rollup.arbitrum.io/rpc",
       accounts : [PRIVATE_KEY],
       gas : 400000000000000,
       gasPrice: 35000000000,
-      
-      
     }
   }
 };

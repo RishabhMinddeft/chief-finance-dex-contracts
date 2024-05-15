@@ -19,9 +19,9 @@
 
 pragma solidity ^0.6.6;
 
-contract WMATIC {
-    string public name = 'Wrapped MATIC';
-    string public symbol = 'WMATIC';
+contract WARB {
+    string public name = 'Wrapped ARB';
+    string public symbol = 'WARB';
     uint8 public decimals = 18;
 
     event Approval(address indexed src, address indexed guy, uint256 wad);

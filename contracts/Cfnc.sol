@@ -9,7 +9,7 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 contract CFNC is ERC20, ERC20Pausable, Ownable, ERC20Burnable {
     constructor(
         uint256 initialSupply
-    ) ERC20('Chief Finance Coin', 'CFC') Ownable(msg.sender) {
+    ) ERC20('Chief Finance Coin', 'CFNC') Ownable(msg.sender) {
         _mint(msg.sender, initialSupply);
     }
 
