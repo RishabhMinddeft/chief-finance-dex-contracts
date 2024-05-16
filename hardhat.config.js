@@ -53,26 +53,14 @@ module.exports = {
   allowUnlimitedContractSize: true,
   etherscan: {
     apiKey: {
-      sepoliaArbitrium: "U8SZWYCEVUCUESBVRHGXK3WN14XE8FXWGE"
+      arbitrumSepolia: "U8SZWYCEVUCUESBVRHGXK3WN14XE8FXWGE"
     
   },
-  customChains: [
-    {
-      network: "sepoliaArbitrium",
-      chainId: 421614,
-      urls: {
-        apiURL: "https://api-goerli.arbiscan.io/api",
-        browserURL: "https://sepolia.arbiscan.io/"
-      }
-    }
-  ]
 },
   networks :{
     sepoliaArbitrium :{
-      url : "https://sepolia-rollup.arbitrum.io/rpc",
+      url : "https://arbitrum-sepolia.infura.io/v3/6a862ce0da644115ad4e2f4696516800",
       accounts : [PRIVATE_KEY],
-      gas : 400000000000000,
-      gasPrice: 35000000000,
     }
   }
 };
