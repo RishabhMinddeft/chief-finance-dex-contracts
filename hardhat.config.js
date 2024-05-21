@@ -58,7 +58,7 @@ module.exports = {
   },
 },
   networks :{
-    sepoliaArbitrium :{
+    arbitrumSepolia :{
       url : "https://arbitrum-sepolia.infura.io/v3/6a862ce0da644115ad4e2f4696516800",
       accounts : [PRIVATE_KEY],
     }

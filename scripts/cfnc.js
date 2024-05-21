@@ -9,7 +9,7 @@ const hre = require("hardhat");
 
 async function main() {
   const buy_coffee = await ethers.getContractFactory("CFNC");
-  const deploy_coffee = await buy_coffee.deploy(ethers.utils.parseEther("1000000"));
+  const deploy_coffee = await buy_coffee.deploy(ethers.parseEther("1000000"));
   await deploy_coffee.deployed();
   console.log(deploy_coffee.address);
 }
