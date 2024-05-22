@@ -8,7 +8,7 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const WETH_CONTRACT = await ethers.getContractFactory("WBNB");
+  const WETH_CONTRACT = await ethers.getContractFactory("WFANTOM");
   const WETH_DEPLOYED = await WETH_CONTRACT.deploy();
   await WETH_DEPLOYED.deployed();
   console.log(WETH_DEPLOYED.address);

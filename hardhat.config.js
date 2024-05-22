@@ -55,7 +55,8 @@ module.exports = {
     // "apiKey" : 
     //    "5SF1UVF68KSRPMM35NZTEJF8YPV4EIF12I"
     apiKey: {
-      amoy: "5UIIDB1ZYSCJIRF83EY291N3KHUR96VV76"
+      amoy: "5UIIDB1ZYSCJIRF83EY291N3KHUR96VV76",
+      fantom : "UVC45U4BF9TNRIAZ9WT7TUHW4KWDKEGQWP"
     
   },
   customChains: [
@@ -66,7 +67,16 @@ module.exports = {
         apiURL: "https://api-amoy.polygonscan.com/api",
         browserURL: "https://amoy.polygonscan.com/"
       }
+    },
+    {
+      network: "fantom",
+      chainId: 4002,
+      urls: {
+        apiURL: "https://api-testnet.ftmscan.com/api",
+        browserURL: "https://testnet.ftmscan.com/"
+      }
     }
+
   ]
 },
   networks :{
@@ -81,6 +91,13 @@ module.exports = {
       url:"https://eth-sepolia.g.alchemy.com/v2/YVEZdAA5ZWLTjpXiP5vqmtKw2OkHGo1L",
       accounts:[PRIVATE_KEY],
       gas : 400000000000000
+
+    },
+    fantom :{
+      url: "https://fantom-testnet-rpc.publicnode.com",
+      accounts:[PRIVATE_KEY],
+      gas : 400000000000000
+
 
     },
     bsc: {

@@ -11,14 +11,14 @@ import './interfaces/IUniswapV2Factory.sol';
 contract SwapRouterV2 {
     using SafeMath for uint;
 
-    address public immutable factoryMain;
-    address public immutable factorySecondary;
-    address public immutable WETH;
+    address public  factoryMain;
+    address public  factorySecondary;
+    address public  WETH;
 
     bytes constant MAIN_PAIR_INIT_CODE =
-        hex'45fd225de151e44f6fd8b19ee610de7fa06b924ed86b31e6f74aa9d5d0e2ee5b';
+        hex'628491fed98e5aae9a4cfc47624d316f017b5abdfe665003c6b9d5b8cb4663ea';
     bytes constant SECONDARY_PAIR_INIT_CODE =
-        hex'45fd225de151e44f6fd8b19ee610de7fa06b924ed86b31e6f74aa9d5d0e2ee5b';
+        hex'628491fed98e5aae9a4cfc47624d316f017b5abdfe665003c6b9d5b8cb4663ea';
 
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'UniswapV2Router: EXPIRED');
