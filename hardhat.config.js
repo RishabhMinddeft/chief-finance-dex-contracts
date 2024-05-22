@@ -53,13 +53,13 @@ module.exports = {
   allowUnlimitedContractSize: true,
   etherscan: {
     apiKey: {
-      arbitrumSepolia: "U8SZWYCEVUCUESBVRHGXK3WN14XE8FXWGE"
+      avalancheFujiTestnet: "avascan"
     
   },
 },
   networks :{
-    arbitrumSepolia :{
-      url : "https://arbitrum-sepolia.infura.io/v3/6a862ce0da644115ad4e2f4696516800",
+    avalancheFujiTestnet :{
+      url : "https://api.avax-test.network/ext/bc/C/rpc",
       accounts : [PRIVATE_KEY],
     }
   }

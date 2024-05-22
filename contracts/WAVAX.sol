@@ -19,9 +19,9 @@
 
 pragma solidity ^0.6.6;
 
-contract WARB {
-    string public name = 'Wrapped ARB';
-    string public symbol = 'WARB';
+contract WAVAX {
+    string public name = 'Wrapped AVAX';
+    string public symbol = 'WAVAX';
     uint8 public decimals = 18;
 
     event Approval(address indexed src, address indexed guy, uint256 wad);

@@ -2,7 +2,7 @@ pragma solidity >=0.6.2;
 
 interface IUniswapV2Router01 {
     function factory() external pure returns (address);
-    function WARB() external pure returns (address);
+    function WAVAX() external pure returns (address);
 
     function addLiquidity(
         address tokenA,

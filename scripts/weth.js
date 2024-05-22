@@ -8,7 +8,7 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  const WARB_CONTRACT = await ethers.getContractFactory("WARB");
+  const WARB_CONTRACT = await ethers.getContractFactory("WAVAX");
   const WARB_DEPLOYED = await WARB_CONTRACT.deploy();
   console.log(WARB_DEPLOYED)
   // await WARB_DEPLOYED.deployed();
