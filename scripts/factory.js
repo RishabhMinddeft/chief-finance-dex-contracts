@@ -9,8 +9,8 @@ const hre = require("hardhat");
 
 async function main() {
   const FACTORY_CONTRACT = await ethers.getContractFactory("UniswapV2Factory");
-  const FACTORY_CONTRACT_DEPLOYED = await FACTORY_CONTRACT.deploy("0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140","0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140");
-  await FACTORY_CONTRACT_DEPLOYED.deployed();
+  const FACTORY_CONTRACT_DEPLOYED = await FACTORY_CONTRACT.deploy;
+  await FACTORY_CONTRACT_DEPLOYED.deployed();("0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140","0x5969Ad5Abb6D9f1A0336579AD094828d4c3D3140")
   console.log(FACTORY_CONTRACT_DEPLOYED.address);
 }
 

@@ -56,7 +56,8 @@ module.exports = {
     //    "5SF1UVF68KSRPMM35NZTEJF8YPV4EIF12I"
     apiKey: {
       amoy: "5UIIDB1ZYSCJIRF83EY291N3KHUR96VV76",
-      fantom : "UVC45U4BF9TNRIAZ9WT7TUHW4KWDKEGQWP"
+      fantom : "UVC45U4BF9TNRIAZ9WT7TUHW4KWDKEGQWP",
+      celo : "715NXCJQ6X1BPTS1T66K6NESBAW46IUMZF"
     
   },
   customChains: [
@@ -75,7 +76,16 @@ module.exports = {
         apiURL: "https://api-testnet.ftmscan.com/api",
         browserURL: "https://testnet.ftmscan.com/"
       }
+    },
+    {
+      network: "celo",
+      chainId: 44787,
+      urls: {
+        apiURL: "https://api-alfajores.celoscan.io/api",
+        browserURL: "https://explorer.celo.org/alfajores/"
+      }
     }
+
 
   ]
 },
@@ -117,8 +127,17 @@ module.exports = {
     
       
     },
+
     amoy :{
       url : "https://80002.rpc.thirdweb.com",
+      accounts : [PRIVATE_KEY],
+      gas : 400000000000000,
+      gasPrice: 35000000000,
+      
+      
+    },
+    celo :{
+      url : "https://alfajores-forno.celo-testnet.org",
       accounts : [PRIVATE_KEY],
       gas : 400000000000000,
       gasPrice: 35000000000,
